@@ -13,7 +13,7 @@ flag_created_date = True
 flag_issue_date = True
 note = []
 while True:
-    enter_title = input('Введите имя заметки: ')
+    enter_title = input('Введите имя заметки, прекратить ввод(stop,нажать ENTER): ')
     if enter_title.lower()=='stop' or enter_title.lower()=='' :
         break
     else:
@@ -41,7 +41,7 @@ while flag_created_date:
         # и выведет нас из блока if else и следом из цикла while
         # так как flag установится в False
         print("Дата введена корректно.")
-        created_date = temp_created_date
+        created_date = temp_created_date[:5]
         flag_created_date = False
     else:
         # в случае перехвата ошибки в блоке try except в нем сгенерируется значение
@@ -59,7 +59,7 @@ while flag_issue_date:
         # и выведет нас из блока if else и следом из цикла while
         # так как flag установится в False
         print("Дата введена корректно.")
-        issue_date = temp_issue_date
+        issue_date = temp_issue_date[:5]
         flag_issue_date = False
     else:
         # в случае перехвата ошибки в блоке try except в нем сгенерируется значение
