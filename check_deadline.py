@@ -21,9 +21,13 @@ issue_date = [] # создаем список для хранения данны
 count_name = 0 # создаем счётчик заметок
 # создаем функцию для проверки дедлайна
 def check_deadline(deadline_date):
+    # осуществляем перевод str в date, так как передаваемый аргумент преобразован в str
     deadline_date = datetime.strptime(deadline_date, '%d:%m:%Y').date()
+    # создаем переменную в которой хранится текущая дата
     today = date.today()
+    # узнаем разницу между сегодняшней датой и датой сдачи
     days_to_deadline =  (today - deadline_date).days
+    # создаем блок в котором описываем порядок вывода значений при различны значениях
     if days_to_deadline == 0:
         print('Дедлайн сегодня')
     elif days_to_deadline > 0:
