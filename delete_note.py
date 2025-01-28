@@ -250,72 +250,101 @@ while True:
                                 case '1':
                                     # проверяем на уникальность имени
                                     while True:
-                                        new_name = input('Введите новое имя пользователя(User1): ')
-                                        if check_username(new_name, note['Имя пользователя'][name_key]):
-                                            print('Такой пользователь уже существует, придумайте себе другое имя.')
-                                        else:
-                                            note['Имя пользователя'][name_key] = new_name
+                                        new_name = input('Введите новое имя пользователя(User1), если хотите выйти из редактирование имени введите "stop": ')
+                                        if new_name.lower() == 'stop':
                                             break
-                                    print(f'Имя пользователя заметки {name_key} изменен.')
+                                        else:
+                                            if check_username(new_name, note['Имя пользователя'][name_key]):
+                                                print('Такой пользователь уже существует, придумайте себе другое имя.')
+                                            else:
+                                                note['Имя пользователя'][name_key] = new_name
+                                                print('Имя пользователя заметки изменено.')
+                                                break
+
                                 # присваиваем новый статус выбранной заметки с проверкой на правильность
                                 # ввода данных
 
                                 case '2':
-                                    new_status = input('Введите новый статус заметки: ')
-                                    check_status(new_status)
-                                    note['Статус заметки'][name_key] = new_status
-                                    print(f'Статус заметки {name_key} изменен.')
+                                    new_status = input('Введите новый статус заметки(active, end or in process), если хотите выйти из редактирования статуса, введите "stop": ')
+                                    if new_status.lower() == 'stop':
+                                        break
+                                    else:
+                                        check_status(new_status)
+                                        note['Статус заметки'][name_key] = new_status
+                                        print('Статус заметки изменен.')
 
                                 # присваиваем новое имя заголовка
                                 case '3':
                                     print(note['Заголовки'][name_key])
-                                    index = note['Заголовки'][name_key].index(input('Выберите изменяемый заголовок: '))
-                                    new_title = input('Введите новое имя заголовка: ')
-                                    while True:
-                                        if check_title(new_title,note['Заголовки'][name_key]):
-                                            print('Такой заголовок для данной заметки уже существует, придумайте новый заголовок')
-                                        else:
-                                            note['Заголовки'][name_key][index] = new_title
-                                            break
-                                    print(f'Заголовок заметки {name_key} изменен.')
+                                    n_title = input('Выберите изменяемый заголовок, если хотите выйти из редактирования заголовка введите "stop": ')
+                                    if n_title.lower() == 'stop':
+                                        break
+                                    else:
+                                        index = note['Заголовки'][name_key].index(n_title)
+                                        while True:
+                                            new_title = input('Введите новое имя заголовка: ')
+                                            if check_title(new_title,note['Заголовки'][name_key]):
+                                                print('Такой заголовок для данной заметки уже существует, придумайте новый заголовок')
+                                            else:
+                                                note['Заголовки'][name_key][index] = new_title
+                                                break
+                                        print('Заголовок заметки изменен.')
                                 # присваиваем новое описание заметки в соответствии с заголовком
                                 case '4':
                                     print(note['Заголовки'][name_key])
-                                    index = note['Заголовки'][name_key].index(input('Выберите заголовок изменяемого текста: '))
-                                    note['Описание заметки'][name_key][index] = input('Введите новое описание заметки: ')
-                                    print(f'Описание заметки изменен.')
+                                    n_content = input('Выберите заголовок изменяемого текста или введите "stop" для выхода из редактирования описания: ')
+                                    if n_content.lower() == 'stop':
+                                        break
+                                    else:
+                                        index = note['Заголовки'][name_key].index(n_content)
+                                        note['Описание заметки'][name_key][index] = input('Введите новое описание заметки: ')
+                                        print('Описание заметки изменено.')
                                 # присваиваем новую дату создания заметки с проверкой на корректность ввода
                                 case '5':
                                     print(note['Дата создания заметки'][name_key])
                                     while True:
-                                        new_created_date = input('Введите новую дату создания заметки: ')
-                                        if check_date_format(new_created_date):
-                                            note['Дата создания заметки'][name_key] = new_created_date
+                                        new_created_date = input('Введите новую дату создания заметки или "stop" для выхода из редактирования даты: ')
+                                        if new_created_date.lower() == 'stop':
                                             break
                                         else:
-                                            print('Не корректный ввод дынных.')
+                                            if check_date_format(new_created_date):
+                                                note['Дата создания заметки'][name_key] = new_created_date
+                                                print('Дата создания заметки успешно изменена.')
+                                                break
+                                            else:
+                                                print('Не корректный ввод дынных.')
                                 # присваиваем новую дату окончания заметки с проверкой на корректность ввода
                                 case '6':
                                     print(note['Дата окончания заметки(дедлайн)'][name_key])
                                     while True:
                                         new_issue_date = input('Введите новую дату окончания заметки: ')
-                                        if check_date_format(new_issue_date):
-                                            note['Дата окончания заметки(дедлайн)'][name_key] = new_issue_date
+                                        if new_issue_date.lower() == 'stop':
                                             break
                                         else:
-                                            print('Не корректный ввод дынных.')
+                                            if check_date_format(new_issue_date):
+                                                note['Дата окончания заметки(дедлайн)'][name_key] = new_issue_date
+                                                print('Дата окончания заметки успешно изменена.')
+                                                break
+                                            else:
+                                                print('Не корректный ввод дынных.')
                                 # для удаления заголовка и соответствующего ему описания
                                 case '7':
                                     if len(note['Заголовки'][name_key]) == 0:
-                                        print('У вас отсутствуют заголовки')
+                                        print('У вас отсутствуют заголовки, создайте их.')
+                                        break
                                     else:
                                         print(note['Заголовки'][name_key])
-                                        index = note['Заголовки'][name_key].index(input('Помните! Удаляя заголовок вы удаляете '
+                                        delete_title = input('Помните! Удаляя заголовок вы удаляете '
                                                                                         'соответствующее ему описание.\n'
-                                                                                        'Выберите удаляемый заголовок(Имя заголовка): '))
-                                        del note['Заголовки'][name_key][index]
-                                        del note['Описание заметки'][name_key][index]
-                                        print('Заголовок заметки успешно удалён.')
+                                                                                        'Выберите удаляемый заголовок(Имя заголовка) '
+                                                                                        'или введите "stop" для выхода из удаления заголовка: ')
+                                        if delete_title.lower() == 'stop':
+                                            break
+                                        else:
+                                            index = note['Заголовки'][name_key].index(delete_title)
+                                            del note['Заголовки'][name_key][index]
+                                            del note['Описание заметки'][name_key][index]
+                                            print('Заголовок заметки успешно удалён.')
                                 # для выхода из меню редактирования заметки
                                 case '8':
                                     print('Вы вышли из редактора заметок')
@@ -331,45 +360,48 @@ while True:
                         print('Выберите способ удаление заметки(Номер):\n'
                               '1. Удаление по номеру заметки;\n'
                               '2. Удаления по имени пользователя.')
-                        choose_delete = input('Выберите способ удаления(Номер): ')
-                        match choose_delete:
-                            case '1':
-                                # выводим список существующих заметок
-                                print('Список существующих заметок:')
-                                for key, _ in notes.items():
-                                    print(f'Заметка № {key}', end = ' ')
-                                # выбираем удаляемую заметку
-                                key_note = int(input('Введите название удаляемой заметки(Номер): '))
-                                # удаляем выбранную заметку
-                                del notes[key_note]
-                                del note['Имя пользователя'][key_note]
-                                del note['Статус заметки'][key_note]
-                                del note['Заголовки'][key_note]
-                                del note['Описание заметки'][key_note]
-                                del note['Дата создания заметки'][key_note]
-                                del note['Дата окончания заметки(дедлайн)'][key_note]
-                                # уменьшаем счётчик заметок, для корректного присваивания в словаре и обращения по ключу
-                                count_name -= 1
-                                print('Заметка успешно удалена.')
+                        choose_delete = input('Выберите способ удаления(Номер) или введите "stop", чтобы остановить удаление заметок: ')
+                        if choose_delete.lower() == 'stop':
+                            break
+                        else:
+                            match choose_delete:
+                                case '1':
+                                    # выводим список существующих заметок
+                                    print('Список существующих заметок:')
+                                    for key, _ in notes.items():
+                                        print(f'Заметка № {key}', end = ' ')
+                                    # выбираем удаляемую заметку
+                                    key_note = int(input('Введите название удаляемой заметки(Номер): '))
+                                    # удаляем выбранную заметку
+                                    del notes[key_note]
+                                    del note['Имя пользователя'][key_note]
+                                    del note['Статус заметки'][key_note]
+                                    del note['Заголовки'][key_note]
+                                    del note['Описание заметки'][key_note]
+                                    del note['Дата создания заметки'][key_note]
+                                    del note['Дата окончания заметки(дедлайн)'][key_note]
+                                    # уменьшаем счётчик заметок, для корректного присваивания в словаре и обращения по ключу
+                                    count_name -= 1
+                                    print('Заметка успешно удалена.')
 
-                            case '2':
-                                print('Список существующих заметок:')
-                                for item in username:
-                                    print(item, end = ' ')
-                                index = note['Имя пользователя'].index(input('\nВведите название удаляемой заметки(Имя пользователя): '))
-                                del notes[index]
-                                del note['Имя пользователя'][index]
-                                del note['Статус заметки'][index]
-                                del note['Заголовки'][index]
-                                del note['Описание заметки'][index]
-                                del note['Дата создания заметки'][index]
-                                del note['Дата окончания заметки(дедлайн)'][index]
-                                # уменьшаем счётчик заметок, для корректного присваивания в словаре и обращения по ключу
-                                count_name -= 1
-                                print('Заметка успешно удалена.')
+                                case '2':
+                                    print('Список существующих заметок:')
+                                    for item in username:
+                                        print(item, end = ' ')
+                                    index = note['Имя пользователя'].index(input('\nВведите название удаляемой заметки(Имя пользователя): '))
+                                    del notes[index]
+                                    del note['Имя пользователя'][index]
+                                    del note['Статус заметки'][index]
+                                    del note['Заголовки'][index]
+                                    del note['Описание заметки'][index]
+                                    del note['Дата создания заметки'][index]
+                                    del note['Дата окончания заметки(дедлайн)'][index]
+                                    # уменьшаем счётчик заметок, для корректного присваивания в словаре и обращения по ключу
+                                    count_name -= 1
+                                    print('Заметка успешно удалена.')
 
-                        # обновляем нумерацию заметок после удаления
-                        notes = {new_key: value for new_key, value in enumerate(notes.values())}
+                            # обновляем нумерацию заметок после удаления
+                            notes = {new_key: value for new_key, value in enumerate(notes.values())}
 
                 # создаем точку входа для отображения существующих заметок
                 case '4':
@@ -378,29 +410,34 @@ while True:
                         for key, _ in notes.items():
                             print(f'Заметка № {key}:')
                         # выбираем нужную заметку
-                        index_note = int(input('Выберите заметку для просмотра информации о ней(Номер): '))
-                        # Выводим содержимое выбранной заметки key отображает описание каждого раздела
-                        # value отображает содержание раздела для конкретной заметки
-                        # index_note нужен для вывода из общего списка словаря только те данные,
-                        # которые соответствуют выбранной заметки. Индексы заметки и индексы по которым
-                        # идет обращение к общим спискам совпадают. Пример обращения
-                        # key в notes == index_note в словаре note содержится списки всех разделов и для каждой
-                        # заметки в словаре есть свой список и свое значение
-                        for key, value in note.items():
-                            if key.lower() == 'дата создания заметки' or key.lower() == 'дата окончания заметки(дедлайн)':
-                                print(f'{key} : {value[index_note][:5]}')
-                            elif key.lower() == 'заголовки':
-                                print(f'{key} : {value[index_note]}')
-                            elif key.lower() == 'описание заметки':
-                                print(f'{key} : {value[index_note]}')
-                            elif key.lower() == 'имя пользователя':
-                                print(f'{key} : {value[index_note]}')
-                            elif key.lower() == 'статус заметки':
-                                print(f'{key} : {value[index_note]}')
-                            else:
-                                print(f'{key} : {value}')
-                        deadline = note['Дата окончания заметки(дедлайн)'][index_note]
-                        check_deadline(deadline)
+                        index_note = input('Выберите заметку для просмотра информации о ней(Номер) или введите "stop" '
+                                               'для выхода из меню просмотра заметок: ')
+                        if index_note.lower() == 'stop':
+                            break
+                        else:
+                            # Выводим содержимое выбранной заметки key отображает описание каждого раздела
+                            # value отображает содержание раздела для конкретной заметки
+                            # index_note нужен для вывода из общего списка словаря только те данные,
+                            # которые соответствуют выбранной заметки. Индексы заметки и индексы по которым
+                            # идет обращение к общим спискам совпадают. Пример обращения
+                            # key в notes == index_note в словаре note содержится списки всех разделов и для каждой
+                            # заметки в словаре есть свой список и свое значение
+                            index_note = int(index_note)
+                            for key, value in note.items():
+                                if key.lower() == 'дата создания заметки' or key.lower() == 'дата окончания заметки(дедлайн)':
+                                    print(f'{key} : {value[index_note][:5]}')
+                                elif key.lower() == 'заголовки':
+                                    print(f'{key} : {value[index_note]}')
+                                elif key.lower() == 'описание заметки':
+                                    print(f'{key} : {value[index_note]}')
+                                elif key.lower() == 'имя пользователя':
+                                    print(f'{key} : {value[index_note]}')
+                                elif key.lower() == 'статус заметки':
+                                    print(f'{key} : {value[index_note]}')
+                                else:
+                                    print(f'{key} : {value}')
+                            deadline = note['Дата окончания заметки(дедлайн)'][index_note]
+                            check_deadline(deadline)
                     else:
                         print('У вас нет заметок. Создайте заметки.')
 
